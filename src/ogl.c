@@ -386,6 +386,15 @@ _ogl_error(const char* fname, int lnum)
 			case GL_INVALID_FRAMEBUFFER_OPERATION:
 				estr = "INVALID_FRAMEBUFFER_OPERATION";
 				break;
+			case GL_STACK_UNDERFLOW:
+				estr = "STACK UNDERFLOW";
+				break;
+			case GL_STACK_OVERFLOW:
+				estr = "STACK OVERFLOW";
+				break;
+			default:
+				estr = "Unknown OpenGL error";
+				break;
 		}
 
 		g_warning("%s:%d: GL error: %s\n", fname, lnum, estr);
