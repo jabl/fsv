@@ -506,7 +506,7 @@ csdialog_wpattern_color_selection_cb( RGBcolor *selected_color, RGBcolor *wpatte
 
 /* Callback for mouse button release in the wildcard pattern list */
 static gboolean
-csdialog_wpattern_list_click_cb( GtkWidget *list_w, GdkEventButton *ev_button )
+csdialog_wpattern_list_click_cb( GtkWidget *list_w, GdkEventButton *ev_button, gpointer user_data)
 {
 	struct WPListRowData *row_data = NULL;
         RGBcolor *color;
