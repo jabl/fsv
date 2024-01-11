@@ -52,6 +52,13 @@ Useful info and screenshots of the original SGI IRIX implementation are availabl
        GL_QUADS to GL_TRIANGLES.
 4. DONE Switch to Gtk+3
 
+### Update to Gtk 4
+
+Step by step instructions at https://docs.gtk.org/gtk4/migrating-3to4.html
+
+1. DONE While using Gtk 3, build cleanly with
+   `meson configure -Dc_args="-DGDK_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED" builddir`
+
 ### Setup github actions for CI
 
 ### Use Gtk calendar
