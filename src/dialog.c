@@ -519,7 +519,10 @@ csdialog_wpattern_list_click_cb( GtkWidget *list_w, GdkEventButton *ev_button )
 	}
 
 	/* Respond only to mouse button 1 (left button) */
-	if (ev_button->button != 1)
+	guint button;
+	if (!gdk_event_get_button((GdkEvent*) ev_button, &button))
+		return FALSE;
+	else if (button != 1)
 		return FALSE;
 
 	GtkTreeSelection *select
