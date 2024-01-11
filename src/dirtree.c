@@ -115,7 +115,7 @@ dirtree_select_cb(GtkTreeSelection *selection, gpointer data)
 		if (dnode != dirtree_current_dnode)
 			filelist_populate( dnode );
 		dirtree_current_dnode = dnode;
-		context_menu( dnode, ev_button );
+		context_menu( dnode );
 		return FALSE;
 	}
 

@@ -1377,7 +1377,7 @@ properties_cb( GtkWidget *unused, GNode *node )
 
 
 void
-context_menu( GNode *node, GdkEventButton *ev_button )
+context_menu( GNode *node)
 {
 	static GtkWidget *popup_menu_w = NULL;
 

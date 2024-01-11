@@ -150,7 +150,7 @@ viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 				window_statusbar( SB_RIGHT, node_absname( indicated_node ) );
 				if (btn3) {
 					/* Bring up context-sensitive menu */
-					context_menu( indicated_node, (GdkEventButton*) event );
+					context_menu( indicated_node );
 					filelist_show_entry( indicated_node );
 				}
 			}

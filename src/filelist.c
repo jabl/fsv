@@ -278,7 +278,7 @@ filelist_select_cb(GtkTreeSelection *selection, gpointer data)
 	//     gtk_clist_select_row(GTK_CLIST(list_w), row, 0);
 	//     geometry_highlight_node(node, FALSE);
 	//     window_statusbar(SB_RIGHT, node_absname(node));
-	//     context_menu(node, ev_button);
+	//     context_menu(node);
 	//     return FALSE;
 	// }
 
