@@ -72,18 +72,18 @@ node_at_location( int x, int y)
 gboolean
 viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 {
-	GdkEventButton *ev_button;
-	GdkEventMotion *ev_motion;
 	GNode *node;
 	double dx, dy;
-	double x, y;
+	gdouble x, y;
+	GdkModifierType ev_state;
 	/* Previous mouse pointer coordinates */
 	static double prev_x, prev_y;
 	boolean btn1, btn2, btn3;
 	boolean ctrl_key;
 
+	GdkEventType ev_type = gdk_event_get_event_type(event);
 	/* Handle low-level GL area widget events */
-	switch (event->type) {
+	switch (ev_type) {
 		case GDK_EXPOSE:
 		ogl_refresh( );
 		return FALSE;
@@ -97,7 +97,7 @@ viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 		break;
 	}
 
-	if (event->type == GDK_BUTTON_PRESS) {
+	if (ev_type == GDK_BUTTON_PRESS) {
 		/* Exit the About presentation if it is up */
 		if (about( ABOUT_END )) {
 			indicated_node = NULL;
@@ -112,16 +112,22 @@ viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 	gint scale; // Scale factor for HiDPI
 
 	/* Mouse-related events */
-	switch (event->type) {
+	switch (ev_type) {
 		case GDK_BUTTON_PRESS:
-		ev_button = (GdkEventButton *)event;
-		btn1 = ev_button->button == 1;
-		btn2 = ev_button->button == 2;
-		btn3 = ev_button->button == 3;
-		ctrl_key = ev_button->state & GDK_CONTROL_MASK;
+		guint button;
+		if (!gdk_event_get_button(event, &button))
+			break;
+		btn1 = button == 1;
+		btn2 = button == 2;
+		btn3 = button == 3;
+		if (!gdk_event_get_state(event, &ev_state))
+			break;
+		ctrl_key = ev_state & GDK_CONTROL_MASK;
+		if (!gdk_event_get_coords(event, &x, &y))
+			break;
 		scale = gtk_widget_get_scale_factor(gl_area_w);
-		x = ev_button->x * scale;
-		y = ev_button->y * scale;
+		x = x * scale;
+		y = y * scale;
 		if (camera_moving( )) {
 			/* Yipe! Impatient user */
 			camera_pan_finish( );
@@ -144,7 +150,7 @@ viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 				window_statusbar( SB_RIGHT, node_absname( indicated_node ) );
 				if (btn3) {
 					/* Bring up context-sensitive menu */
-					context_menu( indicated_node, ev_button );
+					context_menu( indicated_node, (GdkEventButton*) event );
 					filelist_show_entry( indicated_node );
 				}
 			}
@@ -158,23 +164,27 @@ viewport_cb(GtkWidget *gl_area_w, GdkEvent *event, gpointer user_data)
 		break;
 
 		case GDK_BUTTON_RELEASE:
-		ev_button = (GdkEventButton *)event;
-		btn1 = ev_button->state & GDK_BUTTON1_MASK;
-		ctrl_key = ev_button->state & GDK_CONTROL_MASK;
+		if (!gdk_event_get_state(event, &ev_state))
+			break;
+		btn1 = ev_state & GDK_BUTTON1_MASK;
+		ctrl_key = ev_state & GDK_CONTROL_MASK;
 		if (btn1 && !ctrl_key && !camera_moving( ) && (indicated_node != NULL))
 			camera_look_at( indicated_node );
 		gui_cursor( gl_area_w, -1 );
 		break;
 
 		case GDK_MOTION_NOTIFY:
-		ev_motion = (GdkEventMotion *)event;
-		btn1 = ev_motion->state & GDK_BUTTON1_MASK;
-		btn2 = ev_motion->state & GDK_BUTTON2_MASK;
-		btn3 = ev_motion->state & GDK_BUTTON3_MASK;
-		ctrl_key = ev_motion->state & GDK_CONTROL_MASK;
+		if (!gdk_event_get_state(event, &ev_state))
+			break;
+		btn1 = ev_state & GDK_BUTTON1_MASK;
+		btn2 = ev_state & GDK_BUTTON2_MASK;
+		btn3 = ev_state & GDK_BUTTON3_MASK;
+		ctrl_key = ev_state & GDK_CONTROL_MASK;
+		if (!gdk_event_get_coords(event, &x, &y))
+			break;
 		scale = gtk_widget_get_scale_factor(gl_area_w);
-		x = ev_motion->x * scale;
-		y = ev_motion->y * scale;
+		x = x * scale;
+		y = y * scale;
 		if (!camera_moving( ) && !gtk_events_pending( )) {
 			if (btn2) {
 				/* Dolly the camera */
