@@ -14,6 +14,7 @@
 #endif
 #define FSV_WINDOW_H
 
+#include <gtk/gtk.h>
 
 typedef enum {
 	SB_LEFT,
@@ -21,7 +22,7 @@ typedef enum {
 } StatusBarID;
 
 
-void window_init( FsvMode fsv_mode );
+void window_init(GtkApplication *app, gpointer user_data);
 void window_set_access( boolean enabled );
 #ifdef FSV_COLOR_H
 void window_set_color_mode( ColorMode mode );

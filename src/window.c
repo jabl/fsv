@@ -52,11 +52,10 @@ static GList *sw_widget_list = NULL;
 static GtkWidget *left_statusbar_w;
 static GtkWidget *right_statusbar_w;
 
-
 /* Constructs the main program window. The specified mode will be the one
  * initially selected in the Vis menu */
 void
-window_init( FsvMode fsv_mode )
+window_init(GtkApplication *app, gpointer user_data)
 {
 	GtkWidget *main_window_w;
 	GtkWidget *main_vbox_w;
@@ -77,14 +76,15 @@ window_init( FsvMode fsv_mode )
 	GtkWidget *y_scrollbar_w;
 	int window_width, window_height;
 
+	Fsv_init_data* fid = (Fsv_init_data*)user_data;
+	FsvMode fsv_mode = fid->mode;
 	/* Main window widget */
-	main_window_w = gtk_window_new( GTK_WINDOW_TOPLEVEL );
+	main_window_w = gtk_application_window_new(app);
 	gtk_window_set_title( GTK_WINDOW(main_window_w), "fsv" );
 	gtk_window_set_resizable(GTK_WINDOW(main_window_w), TRUE);
 	window_width = 1920 / 2;
 	window_height = 2584 * window_width / 4181;
 	gtk_widget_set_size_request(main_window_w, window_width, window_height);
-	g_signal_connect(G_OBJECT(main_window_w), "delete_event", G_CALLBACK(gtk_main_quit), NULL);
 
 	/* Main vertical box widget */
 	main_vbox_w = gui_vbox_add( main_window_w, 0 );
@@ -240,6 +240,10 @@ window_init( FsvMode fsv_mode )
 
 	/* Showtime! */
 	gtk_widget_show( main_window_w );
+
+	color_init();
+	fsv_load(fid->root_dir);
+	xfree(fid->root_dir);
 }
 
 

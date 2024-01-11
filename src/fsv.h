@@ -12,6 +12,10 @@
 #endif
 #define FSV_FSV_H
 
+typedef struct Fsv_init_data {
+	FsvMode mode;
+	char* root_dir;
+} Fsv_init_data;
 
 void fsv_set_mode( FsvMode mode );
 void fsv_load( const char *dir );

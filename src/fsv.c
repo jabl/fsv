@@ -285,18 +285,19 @@ main( int argc, char **argv )
 		root_dir = xstrdup( "." );
 	}
 
-	/* Initialize GTK+ */
-	gtk_init( &argc, &argv );
+	Fsv_init_data fid;
+	fid.mode = initial_fsv_mode;
+	fid.root_dir = root_dir;
 
-	window_init( initial_fsv_mode );
-	color_init( );
+	// G_APPLICATION_FLAGS_NONE is deprecated, as of glib 2.74 should use
+	// G_APPLICATION_DEFAULT_FLAGS
+	GtkApplication *app = gtk_application_new("com.github.jabl.fsv",
+	    G_APPLICATION_FLAGS_NONE);
+	g_signal_connect(app, "activate", G_CALLBACK (window_init), &fid);
+	int status = g_application_run(G_APPLICATION (app), argc, argv);
+	g_object_unref(app);
 
-	fsv_load( root_dir );
-	xfree( root_dir );
-
-	gtk_main( );
-
-	return 0;
+	return status;
 }
 
 

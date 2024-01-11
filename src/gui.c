@@ -26,12 +26,13 @@ enum {
 };
 
 
-/* For whenever gtk_main( ) is far away */
+/* For whenever the main loop is far away */
 void
 gui_update( void )
 {
-	while (gtk_events_pending( ) > 0)
-		gtk_main_iteration( );
+	GMainContext* ctx = g_main_context_default();
+	while (g_main_context_pending(ctx))
+		g_main_context_iteration(ctx, FALSE);
 }
 
 
