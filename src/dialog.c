@@ -979,7 +979,14 @@ dialog_color_setup( void )
 	GtkTreeSelection *select = gtk_tree_view_get_selection(GTK_TREE_VIEW(csdialog.wpattern.list_w));
 	gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
 
+	// In Gtk 4 something like this:
+	//GtkGesture *press = gtk_gesture_click_new();
+	//gtk_gesture_single_set_button(GTK_GESTURE_SINGLE (press), GDK_BUTTON_PRIMARY);
+	//gtk_widget_add_controller(csdialog.wpattern.list_w, GTK_EVENT_CONTROLLER (press));
+	//g_signal_connect(press, "released", G_CALLBACK(csdialog_wpattern_list_click_cb), NULL);
+	// In Gtk 3 just connect directly
 	g_signal_connect( G_OBJECT(csdialog.wpattern.list_w), "button_release_event", G_CALLBACK(csdialog_wpattern_list_click_cb), NULL );
+
 	g_signal_connect( G_OBJECT(select), "changed", G_CALLBACK(csdialog_wpattern_list_select_unselect_cb), NULL );
 	g_signal_connect( G_OBJECT(csdialog.wpattern.list_w), "drag_motion", G_CALLBACK(csdialog_wpattern_list_drag_cb), NULL );
 
