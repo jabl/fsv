@@ -291,8 +291,13 @@ main( int argc, char **argv )
 
 	// G_APPLICATION_FLAGS_NONE is deprecated, as of glib 2.74 should use
 	// G_APPLICATION_DEFAULT_FLAGS
+#ifdef GLIB_VERSION_2_74
+#define MY_G_APPLICATION_FLAGS G_APPLICATION_DEFAULT_FLAGS
+#else
+#define MY_G_APPLICATION_FLAGS G_APPLICATION_FLAGS_NONE
+#endif
 	GtkApplication *app = gtk_application_new("com.github.jabl.fsv",
-	    G_APPLICATION_FLAGS_NONE);
+	    MY_G_APPLICATION_FLAGS);
 	g_signal_connect(app, "activate", G_CALLBACK (window_init), &fid);
 	int status = g_application_run(G_APPLICATION (app), argc, argv);
 	g_object_unref(app);
