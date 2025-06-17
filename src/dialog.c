@@ -49,7 +49,11 @@ dialog_pass_main_window_widget( GtkWidget *window_w )
 static void
 close_cb( GtkWidget *unused, GtkWidget *window_w )
 {
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(window_w);
+#else
 	gtk_widget_destroy( window_w );
+#endif
 }
 
 
@@ -60,7 +64,11 @@ transient_end_cb( Morph *morph )
 	GtkWidget *window_w;
 
 	window_w = (GtkWidget *)morph->data;
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(window_w);
+#else
 	gtk_widget_destroy( window_w );
+#endif
 
 	/* Restore normal mouse cursor */
 	gui_cursor( main_window_w, -1 );
@@ -813,7 +821,11 @@ csdialog_ok_button_cb( GtkWidget *unused, GtkWidget *window_w )
         /* Update option menu to reflect current color mode */
 	window_set_color_mode( mode );
 
-	gtk_widget_destroy( window_w );
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(window_w);
+#else
+        gtk_widget_destroy( window_w );
+#endif
 }
 
 
@@ -1394,7 +1406,11 @@ context_menu( GNode *node)
 	/* Recycle previous popup menu */
 	if (popup_menu_w != NULL) {
 		g_assert( GTK_IS_MENU(popup_menu_w) );
+#if GTK_MAJOR_VERSION >= 4
+		gtk_window_destroy(popup_menu_w);
+#else
 		gtk_widget_destroy( popup_menu_w );
+#endif
 	}
 
 	/* Check for the special case in which the menu has only one item */

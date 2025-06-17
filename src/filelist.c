@@ -293,7 +293,12 @@ filelist_init( void )
 
 	/* Replace current list widget with a single-column one */
 	parent_w = gtk_widget_get_parent(gtk_widget_get_parent(file_list_w));
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(gtk_widget_get_parent(file_list_w));
+#else
 	gtk_widget_destroy(gtk_widget_get_parent(file_list_w));
+#endif
+
 	file_list_w = gui_filelist_new(parent_w);
 
 	GtkTreeSelection *select = gtk_tree_view_get_selection(GTK_TREE_VIEW(file_list_w));
@@ -320,7 +325,11 @@ filelist_scan_monitor_init( void )
 
 	/* Replace current list widget with a 3-column one */
 	parent_w = gtk_widget_get_parent(gtk_widget_get_parent(file_list_w));
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(gtk_widget_get_parent(file_list_w));
+#else
 	gtk_widget_destroy(gtk_widget_get_parent(file_list_w));
+#endif
 	file_list_w = gui_filelist_scan_new( parent_w );
 
 	GtkTreeModel *model = gtk_tree_view_get_model(GTK_TREE_VIEW(file_list_w));

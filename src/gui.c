@@ -1098,7 +1098,11 @@ gui_colorsel_window( const char *title, RGBcolor *init_color, void (*ok_callback
 		(ok_callback)(&color, ok_callback_data);
         }
 
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(widget);
+#else
 	gtk_widget_destroy(widget);
+#endif
 }
 
 
@@ -1136,7 +1140,11 @@ entry_window_cb( GtkWidget *unused, GtkWidget *entry_window_w )
 
 	user_callback = (void (*)( const char *, void * ))g_object_get_data(G_OBJECT(entry_window_w), "user_callback");
 	user_callback_data = g_object_get_data(G_OBJECT(entry_window_w), "user_callback_data");
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(entry_window_w);
+#else
 	gtk_widget_destroy( entry_window_w );
+#endif
 
 	/* Call user callback */
 	(user_callback)( entry_text, user_callback_data );
@@ -1180,7 +1188,13 @@ gui_entry_window( const char *title, const char *init_text, void (*ok_callback)(
 	gui_button_add( hbox_w, _("OK"), entry_window_cb, entry_window_w );
 	vbox_w = gui_vbox_add( hbox_w, 0 ); /* spacer */
 	button_w = gui_button_add( hbox_w, _("Cancel"), NULL, NULL );
-	g_signal_connect_swapped(button_w, "clicked", G_CALLBACK(gtk_widget_destroy), entry_window_w);
+	g_signal_connect_swapped(button_w, "clicked",
+#if GTK_MAJOR_VERSION >= 4
+		G_CALLBACK(gtk_window_destroy),
+#else
+		G_CALLBACK(gtk_widget_destroy),
+#endif
+		 entry_window_w);
 
 	gtk_widget_show( entry_window_w );
 	gtk_widget_grab_focus( entry_w );
@@ -1211,7 +1225,11 @@ gui_dir_choose( const char *title, GtkWidget *parent, const char *init_dir)
 		dirname = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_dialog));
 	}
 
+#if GTK_MAJOR_VERSION >= 4
+	gtk_window_destroy(file_dialog);
+#else
 	gtk_widget_destroy(file_dialog);
+#endif
 	return dirname;
 }
 
