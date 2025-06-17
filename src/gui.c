@@ -1113,7 +1113,6 @@ gui_dialog_window( const char *title, void (*close_callback)( ) )
 	gtk_window_set_resizable(GTK_WINDOW(window_w), FALSE);
 	gtk_window_set_position( GTK_WINDOW(window_w), GTK_WIN_POS_CENTER );
 	gtk_window_set_title( GTK_WINDOW(window_w), title );
-	g_signal_connect(G_OBJECT(window_w), "delete_event", G_CALLBACK(gtk_widget_destroy), NULL);
 	if (close_callback != NULL)
 		g_signal_connect(G_OBJECT(window_w), "destroy", G_CALLBACK(close_callback), NULL);
 	/* !gtk_widget_show( ) */
