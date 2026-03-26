@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 
 sources = 'nvstore.c'
 libmisc = static_library('misc', sources)

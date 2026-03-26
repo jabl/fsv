@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 
 sources = 'debug.c'
 libdebug = static_library('debug', sources, include_directories: '..',

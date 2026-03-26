@@ -1,6 +1,6 @@
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 
-project('fsv', 'c', version: '3.0')
+project('fsv', 'c', version: '3.1alpha')
 gtkdep = [dependency('gtk+-3.0'),
           dependency('gdk-pixbuf-2.0'), dependency('epoxy')]
 cglm_dep = dependency('cglm', fallback : ['cglm', 'cglm_dep'])

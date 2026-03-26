@@ -17,6 +17,7 @@ Useful info and screenshots of the original SGI IRIX implementation are availabl
 
 1. Clone the repository
 2. Install dependencies (Ubuntu): `sudo apt install libgtk-3-dev libgl1-mesa-dev libglu1-mesa-dev libepoxy-dev libcglm-dev`
+   For Gtk4: `sudo apt install libgtk-4-dev`
     1. cglm is available as of Ubuntu 20.10. If cglm is not available
        system-wide, make a subdirectory under the project root and extract
         cglm there under the name cglm:

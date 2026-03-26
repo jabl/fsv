@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 BasedOnStyle: Google
 
 IndentWidth: 8

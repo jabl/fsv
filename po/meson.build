@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 
 i18n = import('i18n')
 # define GETTEXT_PACKAGE

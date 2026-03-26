@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # SPDX-FileCopyrightText: 2021 Janne Blomqvist <blomqvist.janne@gmail.com>
-# SPDX-License-Identifier: Zlib
+# SPDX-License-Identifier: MIT
 
 # Plots vertices of the FSV characters along with their indices.
 # To use: Copypaste a vertex array from src/fsv3d.h to a text file, run this
